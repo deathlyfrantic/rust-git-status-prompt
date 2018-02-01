@@ -116,10 +116,11 @@ fn branch_name(repo: &Repository) -> String {
     } + 1;
 
     match head.symbolic_target() {
-        // this is an unborn branch probably? and/or like a repo with no commits?
-        // so say it's master. who knows man git is weird
+        // this is an unborn branch probably? and/or like a repo with no
+        // commits? so say it's master. who knows man git is weird
         Some(_) => default,
-        // this is anything else, generally a specific commit i guess? like `git checkout HEAD~1`
+        // this is anything else, generally a specific commit i guess?
+        // like `git checkout HEAD~1`
         None => {
             let mut commit = format!(":{}", head.target().unwrap());
             commit.truncate(hash_length as usize);
