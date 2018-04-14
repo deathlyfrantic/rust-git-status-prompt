@@ -29,9 +29,8 @@ fn get_status_counts(repo: &Repository) -> Counts {
     let mut opts = StatusOptions::new();
     opts.include_untracked(true);
 
-    let statuses = repo.statuses(Some(&mut opts)).expect(
-        "Unable to gather status information.",
-    );
+    let statuses = repo.statuses(Some(&mut opts))
+        .expect("Unable to gather status information.");
 
     let mut staged = Status::empty();
     staged.insert(git2::STATUS_INDEX_NEW);
@@ -89,12 +88,10 @@ fn branch_name(repo: &Repository) -> String {
 
     let head = match repo.head() {
         Ok(head) => head,
-        Err(_) => {
-            match repo.find_reference("HEAD") {
-                Ok(h) => h,
-                Err(_) => return default,
-            }
-        }
+        Err(_) => match repo.find_reference("HEAD") {
+            Ok(h) => h,
+            Err(_) => return default,
+        },
     };
 
     if head.is_branch() {
@@ -107,9 +104,8 @@ fn branch_name(repo: &Repository) -> String {
         );
     }
 
-    let config = repo.config().expect(
-        "Unable to open config for this repository.",
-    );
+    let config = repo.config()
+        .expect("Unable to open config for this repository.");
     let hash_length = match config.get_i32("core.abbrev") {
         Ok(l) => l,
         Err(_) => 8,
