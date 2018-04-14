@@ -107,9 +107,9 @@ fn branch_name(repo: &Repository) -> String {
     let config = repo.config()
         .expect("Unable to open config for this repository.");
     let hash_length = match config.get_i32("core.abbrev") {
-        Ok(l) => l,
-        Err(_) => 8,
-    } + 1;
+        Ok(l) => l + 1,
+        Err(_) => 9,
+    };
 
     match head.symbolic_target() {
         // this is an unborn branch probably? and/or like a repo with no
