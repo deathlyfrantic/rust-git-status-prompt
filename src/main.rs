@@ -29,7 +29,8 @@ fn get_status_counts(repo: &Repository) -> Counts {
     let mut opts = StatusOptions::new();
     opts.include_untracked(true);
 
-    let statuses = repo.statuses(Some(&mut opts))
+    let statuses = repo
+        .statuses(Some(&mut opts))
         .expect("Unable to gather status information.");
 
     let mut staged = Status::empty();
@@ -104,7 +105,8 @@ fn branch_name(repo: &Repository) -> String {
         );
     }
 
-    let config = repo.config()
+    let config = repo
+        .config()
         .expect("Unable to open config for this repository.");
     let hash_length = match config.get_i32("core.abbrev") {
         Ok(l) => l + 1,
